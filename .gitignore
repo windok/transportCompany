@@ -1,0 +1,18 @@
+*~
+.Trash-*
+.DS_Store
+Icon
+._*
+
+*.iml
+.idea/
+/out/
+
+### Java template
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
