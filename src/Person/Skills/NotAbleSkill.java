@@ -1,19 +1,21 @@
 package Person.Skills;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class NotAbleSkill extends BaseSkill {
 
-    protected Map<Integer, Integer> marketSalaryMapByQualification = new HashMap<Integer, Integer>(){{
-        put(QUALIFICATION_NO, 0);
-    }};
-
-    public NotAbleSkill(int qualification) {
-        super(qualification);
+    public NotAbleSkill() {
+        super(QUALIFICATION_NO);
     }
 
-    public void perform() {
-        System.out.println("Person can not drive any vehicle");
+    protected void initializeSalaryMap() {
+        this.setMarketSalaryMapByQualification(new HashMap<Integer, Integer>() {{
+            put(QUALIFICATION_NO, 0);
+        }});
+    }
+
+    public void perform() throws UnsupportedOperationException {
+        System.out.println("Employee can not drive any vehicle");
+        throw new UnsupportedOperationException();
     }
 }

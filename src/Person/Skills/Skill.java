@@ -2,6 +2,6 @@ package Person.Skills;
 
 public interface Skill {
 
-    void perform();
+    void perform() throws UnsupportedOperationException;
 
 }

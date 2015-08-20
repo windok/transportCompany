@@ -28,7 +28,7 @@ public class HumanResourcesDepartment {
                 skill = new DriveBoatSkill(qualification);
                 break;
             default:
-                skill = new NotAbleSkill(qualification);
+                skill = new NotAbleSkill();
         }
 
         return new Employee(skill);

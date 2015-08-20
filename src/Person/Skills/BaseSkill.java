@@ -10,13 +10,19 @@ public abstract class BaseSkill implements Skill {
     public static final Integer QUALIFICATION_THIRD = 3;
     public static final Integer QUALIFICATION_FOURTH = 4;
     public static final Integer QUALIFICATION_FIFTH = 5;
-    
+
     private int qualification;
     private int salary;
-    protected Map<Integer, Integer> marketSalaryMapByQualification;
+    private Map<Integer, Integer> marketSalaryMapByQualification;
+
+    protected abstract void initializeSalaryMap();
 
     public BaseSkill(int qualification) {
-        this.setSalary(qualification).setSalary(this.getMarketSalaryMapByQualification().get(qualification));
+        this.
+                initializeSalaryMap();
+                setQualification(qualification).
+                setSalary(this.getMarketSalaryMapByQualification().get(qualification))
+        ;
     }
 
     public Map<Integer, Integer> getMarketSalaryMapByQualification() {
