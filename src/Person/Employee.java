@@ -1,19 +1,14 @@
 package Person;
 
-import Person.Skills.Skill;
+import Person.Skills.BaseSkill;
 
 public class Employee {
 
-    private Skill skill;
-    private int qualification;
-    private float salary;
+    private BaseSkill skill;
     private String region;
 
-    public Employee(Skill skill, int qualification, float salary) {
-        this.setSkill(skill).
-                setQualification(qualification).
-                setSalary(salary)
-        ;
+    public Employee(BaseSkill skill) {
+        this.setSkill(skill);
     }
 
     public void doJob()
@@ -21,30 +16,12 @@ public class Employee {
         this.getSkill().perform();
     }
 
-    public Skill getSkill() {
+    public BaseSkill getSkill() {
         return skill;
     }
 
-    public Employee setSkill(Skill skill) {
+    public Employee setSkill(BaseSkill skill) {
         this.skill = skill;
-        return this;
-    }
-
-    public int getQualification() {
-        return qualification;
-    }
-
-    public Employee setQualification(int qualification) {
-        this.qualification = qualification;
-        return this;
-    }
-
-    public float getSalary() {
-        return salary;
-    }
-
-    public Employee setSalary(float salary) {
-        this.salary = salary;
         return this;
     }
 
