@@ -4,8 +4,8 @@ import Person.Employee;
 
 public class Aircraft extends Transport{
 
-    public Aircraft(int number, String region, int distanceWithoutRefuel, int capacity, int speed, Employee employee) {
-        super(number, region, distanceWithoutRefuel, capacity, speed, employee);
+    public Aircraft(int number, int distanceWithoutRefuel, int capacity, int speed) {
+        super(number, distanceWithoutRefuel, capacity, speed);
     }
 
     protected void arrive() {

@@ -17,17 +17,17 @@ public abstract class Transport {
     private int speed;
     private Employee employee;
 
-    private Set<Cargo> cargo;
+    private Set<Cargo> cargoSet;
 
-    public Transport(int number, String region, int distanceWithoutRefuel, int capacity, int speed, Employee employee) {
-        this.setNumber(number).
-                setRegion(region).
-                setDistanceWithoutRefuel(distanceWithoutRefuel).
-                setCapacity(capacity).
-                setEmployee(employee).
-                setSpeed(speed).
-                unload()
-        ;
+    private boolean isInTransit;
+
+    public Transport(int number, int distanceWithoutRefuel, int capacity, int speed) {
+        setNumber(number);
+        setDistanceWithoutRefuel(distanceWithoutRefuel);
+        setCapacity(capacity);
+        setSpeed(speed);
+        setIsInTransit(false);
+        unload();
     }
 
     protected abstract void arrive();
@@ -38,44 +38,44 @@ public abstract class Transport {
 
     public final Transport load(Cargo cargo) throws OutOfSpaceException {
 
-        if (cargo.getWeight() > this.getCapacity() - this.getLoadedSpace()) {
+        if (cargo.getWeight() > getCapacity() - getLoadedSpace()) {
             throw new OutOfSpaceException();
         }
 
-        this.cargo.add(cargo);
+        getCargoSet().add(cargo);
 
         return this;
     }
 
     public final Transport unload() {
-        this.setLoadedSpace(0);
-        this.setCargo(new HashSet<>());
+        setLoadedSpace(0);
+        setCargoSet(new HashSet<>());
 
         return this;
     }
 
     public final void deliver(int distance) throws InterruptedException {
-
-        this.leave();
-
-        this.getEmployee().doJob();
+        setIsInTransit(true);
+        leave();
+        getEmployee().doJob();
 
         int distanceToGo = distance;
 
-        while (distanceToGo > this.getDistanceWithoutRefuel()) {
-            this.goDistance(this.getDistanceWithoutRefuel());
-            distanceToGo -= this.getDistanceWithoutRefuel();
-            this.refuel();
+        while (distanceToGo > getDistanceWithoutRefuel()) {
+            goDistance(getDistanceWithoutRefuel());
+            distanceToGo -= getDistanceWithoutRefuel();
+            refuel();
         }
 
-        this.goDistance(distanceToGo);
+        goDistance(distanceToGo);
 
-        this.arrive();
-        this.unload();
+        arrive();
+        setIsInTransit(false);
+        unload();
     }
 
     private void goDistance(int distance) throws InterruptedException {
-        int timeToGo = (int) (distance * 1f / this.getSpeed() * 1000);
+        int timeToGo = (int) (distance * 1f / getSpeed() * 1000);
         Thread.sleep(timeToGo);
     }
 
@@ -142,12 +142,21 @@ public abstract class Transport {
         return this;
     }
 
-    public Set<Cargo> getCargo() {
-        return cargo;
+    public Set<Cargo> getCargoSet() {
+        return cargoSet;
     }
 
-    public Transport setCargo(Set<Cargo> cargo) {
-        this.cargo = cargo;
+    public Transport setCargoSet(Set<Cargo> cargoSet) {
+        this.cargoSet = cargoSet;
+        return this;
+    }
+
+    public boolean isInTransit() {
+        return isInTransit;
+    }
+
+    private Transport setIsInTransit(boolean isInTransit) {
+        this.isInTransit = isInTransit;
         return this;
     }
 
@@ -155,7 +164,7 @@ public abstract class Transport {
 
         String cargoDescription = "";
 
-        for (Cargo cargo : this.getCargo()) {
+        for (Cargo cargo : getCargoSet()) {
             cargoDescription += cargo.toString();
         }
 
@@ -163,6 +172,6 @@ public abstract class Transport {
             cargoDescription = "NO CARGO";
         }
 
-        return "number - " + this.getNumber() + "; region - " + this.getRegion() + "; cargo - " + cargoDescription + "; empty space - " + (this.getCapacity() - this.getLoadedSpace());
+        return "number - " + getNumber() + "; region - " + getRegion() + "; cargo - " + cargoDescription + "; empty space - " + (getCapacity() - getLoadedSpace());
     }
 }
