@@ -1,11 +1,11 @@
-package Departments;
+package Factories;
 
 import Person.Employee;
 import Person.Skills.*;
 
 import java.util.Random;
 
-public class HumanResourcesDepartment {
+public class EmployeeFactory {
 
     public static final String EMPLOYEE_TYPE_DRIVER = "driver";
     public static final String EMPLOYEE_TYPE_PILOT = "pilot";
