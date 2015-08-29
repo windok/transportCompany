@@ -92,7 +92,7 @@ public enum Qualification {
 
     private static Random random = new Random();
     public static Qualification random() {
-        return Qualification.values()[random.nextInt(Qualification.values().length + 1)];
+        return Qualification.values()[random.nextInt(Qualification.values().length)];
     }
 
 }

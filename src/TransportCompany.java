@@ -1,6 +1,8 @@
+import Builders.CargoBuilder;
 import Builders.TransportBuilder;
 import Departments.CargoLoadingDepartment;
 import Departments.TransportDepartment;
+import Generators.CargoGenerator;
 import Region.Region;
 import Transport.TransportType;
 
@@ -17,6 +19,8 @@ public class TransportCompany {
     public static void main(String args[]) throws Exception {
 
         TransportCompany transportCompany = new TransportCompany(new TransportDepartment(), new CargoLoadingDepartment());
+
+        CargoGenerator cargoGenerator = new CargoGenerator(transportCompany.getCargoLoadingDepartment(), new CargoBuilder());
 
         TransportBuilder carBuilder = TransportBuilder.instantiate(TransportType.CAR);
         TransportBuilder aircraftBuilder = TransportBuilder.instantiate(TransportType.AIRCRAFT);

@@ -11,7 +11,7 @@ public enum TransportType {
     private static Random random = new Random();
     public static TransportType random()
     {
-        return TransportType.values()[random.nextInt(TransportType.values().length + 1)];
+        return TransportType.values()[random.nextInt(TransportType.values().length)];
     }
 
 

@@ -12,7 +12,7 @@ public enum Region {
 
     public static Region random()
     {
-        return Region.values()[random.nextInt(Region.values().length + 1)];
+        return Region.values()[random.nextInt(Region.values().length)];
     }
 
 }
