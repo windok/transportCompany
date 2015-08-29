@@ -1,12 +1,14 @@
 package Cargo;
 
+import Region.Region;
+
 public abstract class Cargo implements Comparable {
 
     int weight;
 
-    String region;
+    Region region;
 
-    public Cargo(int weight, String region) {
+    public Cargo(int weight, Region region) {
         this.setWeight(weight).setRegion(region);
     }
 
@@ -19,11 +21,11 @@ public abstract class Cargo implements Comparable {
         return this;
     }
 
-    public String getRegion() {
+    public Region getRegion() {
         return region;
     }
 
-    public Cargo setRegion(String region) {
+    public Cargo setRegion(Region region) {
         this.region = region;
         return this;
     }

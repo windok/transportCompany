@@ -1,8 +1,10 @@
 package Cargo;
 
+import Region.Region;
+
 public class Human extends Cargo {
 
-    public Human(int weight, String region) {
+    public Human(int weight, Region region) {
         super(weight, region);
     }
 

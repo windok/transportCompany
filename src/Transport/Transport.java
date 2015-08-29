@@ -3,6 +3,7 @@ package Transport;
 import Cargo.Cargo;
 import Exceptions.OutOfSpaceException;
 import Person.Employee;
+import Region.Region;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,7 +11,7 @@ import java.util.Set;
 public abstract class Transport {
 
     private int number;
-    private String region;
+    private Region region;
     private int distanceWithoutRefuel;
     private int capacity;
     private int loadedSpace;
@@ -97,11 +98,11 @@ public abstract class Transport {
         return this;
     }
 
-    public String getRegion() {
+    public Region getRegion() {
         return region;
     }
 
-    public Transport setRegion(String region) {
+    public Transport setRegion(Region region) {
         this.region = region;
         return this;
     }

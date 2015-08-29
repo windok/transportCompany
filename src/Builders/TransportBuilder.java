@@ -3,14 +3,12 @@ package Builders;
 import Builders.Employee.*;
 import Builders.Transport.*;
 import Exceptions.NotDefinedTransportException;
-import Transport.Transport;
+import Region.Region;
+import Transport.*;
+
 import java.util.Random;
 
 abstract public class TransportBuilder {
-
-    public static final String TYPE_CAR = "Car";
-    public static final String TYPE_AIRCRAFT = "Aircraft";
-    public static final String TYPE_BOAT = "Boat";
 
     public static final int SPEED_MIN = 100;
     public static final int SPEED_MAX = 500;
@@ -29,13 +27,13 @@ abstract public class TransportBuilder {
         setEmployeeBuilder(employeeBuilder);
     }
 
-    public static TransportBuilder instantiate(String transportType) throws NotDefinedTransportException {
+    public static TransportBuilder instantiate(TransportType transportType) throws NotDefinedTransportException {
         switch (transportType) {
-            case TYPE_CAR:
+            case CAR:
                 return new CarBuilder(new DriverBuilder());
-            case TYPE_AIRCRAFT:
+            case AIRCRAFT:
                 return new AircraftBuilder(new PilotBuilder());
-            case TYPE_BOAT:
+            case BOAT:
                 return new BoatBuilder(new CaptainBuilder());
         }
 
@@ -44,7 +42,7 @@ abstract public class TransportBuilder {
 
     abstract protected Transport create();
 
-    public Transport buy(String region) {
+    public Transport buy(Region region) {
         return create().
                 setEmployee(getEmployeeBuilder().hire(region)).
                 setRegion(region);

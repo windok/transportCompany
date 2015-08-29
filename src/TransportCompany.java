@@ -1,6 +1,8 @@
 import Builders.TransportBuilder;
 import Departments.CargoLoadingDepartment;
 import Departments.TransportDepartment;
+import Region.Region;
+import Transport.TransportType;
 
 public class TransportCompany {
 
@@ -12,19 +14,21 @@ public class TransportCompany {
         setTransportDepartment(transportDepartment).setCargoLoadingDepartment(cargoLoadingDepartment);
     }
 
-
     public static void main(String args[]) throws Exception {
 
         TransportCompany transportCompany = new TransportCompany(new TransportDepartment(), new CargoLoadingDepartment());
 
-        TransportBuilder carBuilder = TransportBuilder.instantiate(TransportBuilder.TYPE_CAR);
-        TransportBuilder aircraftBuilder = TransportBuilder.instantiate(TransportBuilder.TYPE_AIRCRAFT);
-        TransportBuilder boatBuilder = TransportBuilder.instantiate(TransportBuilder.TYPE_BOAT);
+        TransportBuilder carBuilder = TransportBuilder.instantiate(TransportType.CAR);
+        TransportBuilder aircraftBuilder = TransportBuilder.instantiate(TransportType.AIRCRAFT);
+        TransportBuilder boatBuilder = TransportBuilder.instantiate(TransportType.BOAT);
 
         transportCompany.getTransportDepartment().
-                addTransport(carBuilder.buy("US")).addTransport(aircraftBuilder.buy("US")).addTransport(boatBuilder.buy("US")).
-                addTransport(carBuilder.buy("EMEA")).addTransport(aircraftBuilder.buy("EMEA")).addTransport(boatBuilder.buy("EMEA")).
-                addTransport(carBuilder.buy("APAC")).addTransport(aircraftBuilder.buy("APAC")).addTransport(boatBuilder.buy("APAC"))
+                addTransport(carBuilder.buy(Region.random())).
+                addTransport(carBuilder.buy(Region.random())).
+                addTransport(aircraftBuilder.buy(Region.random())).
+                addTransport(aircraftBuilder.buy(Region.random())).
+                addTransport(boatBuilder.buy(Region.random())).
+                addTransport(boatBuilder.buy(Region.random()))
         ;
 
 

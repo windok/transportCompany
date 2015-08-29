@@ -1,15 +1,16 @@
 package Person;
 
 import Person.Skills.Skill;
+import Region.Region;
 
 public class Employee {
 
     private Skill skill;
-    private int qualification;
+    private Qualification qualification;
     private int salary;
-    private String region;
+    private Region region;
 
-    public Employee(Skill skill, int qualification, int salary, String region) {
+    public Employee(Skill skill, Qualification qualification, int salary, Region region) {
         setSkill(skill).setQualification(qualification).setSalary(salary).setRegion(region);
     }
 
@@ -26,11 +27,11 @@ public class Employee {
         return this;
     }
 
-    public int getQualification() {
+    public Qualification getQualification() {
         return qualification;
     }
 
-    public Employee setQualification(int qualification) {
+    public Employee setQualification(Qualification qualification) {
         this.qualification = qualification;
         return this;
     }
@@ -44,11 +45,11 @@ public class Employee {
         return this;
     }
 
-    public String getRegion() {
+    public Region getRegion() {
         return region;
     }
 
-    public Employee setRegion(String region) {
+    public Employee setRegion(Region region) {
         this.region = region;
         return this;
     }
