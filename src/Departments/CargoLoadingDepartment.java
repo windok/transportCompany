@@ -15,7 +15,7 @@ public class CargoLoadingDepartment {
         this.getLoadingQueue().add(cargo);
     }
 
-    public void load(Transport transport) {
+    synchronized public void load(Transport transport) {
         for (Cargo cargo : this.getLoadingQueue()) {
             if (transport.getRegion().equals(cargo.getRegion())) {
                 try {

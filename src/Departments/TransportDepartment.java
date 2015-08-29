@@ -1,15 +1,22 @@
 package Departments;
 
+import Exceptions.NoFreeTransportException;
 import Transport.Transport;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class TransportDepartment {
 
     private Set<Transport> transportPark;
 
-    public void addTransport(Transport transport) {
+    public TransportDepartment() {
+        setTransportPark(new HashSet<>());
+    }
+
+    public TransportDepartment addTransport(Transport transport) {
         getTransportPark().add(transport);
+        return this;
     }
 
     synchronized public Transport getFreeTransport() throws Exception {
@@ -19,7 +26,7 @@ public class TransportDepartment {
             }
         }
 
-        throw new Exception("There is no free transport");
+        throw new NoFreeTransportException();
     }
 
     private Set<Transport> getTransportPark() {
