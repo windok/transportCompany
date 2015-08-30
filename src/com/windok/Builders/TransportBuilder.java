@@ -2,6 +2,7 @@ package com.windok.Builders;
 
 import com.windok.Builders.Employee.*;
 import com.windok.Builders.Transport.*;
+import com.windok.Config;
 import com.windok.Exceptions.NotDefinedTransportException;
 import com.windok.Region;
 import com.windok.Transport.*;
@@ -9,15 +10,6 @@ import com.windok.Transport.*;
 import java.util.Random;
 
 abstract public class TransportBuilder {
-
-    public static final int SPEED_MIN = 100;
-    public static final int SPEED_MAX = 500;
-
-    public static final int CAPACITY_MIN = 50;
-    public static final int CAPACITY_MAX = 2500;
-
-    public static final int DISTANCE_WITHOUT_REFUEL_MIN = 300;
-    public static final int DISTANCE_WITHOUT_REFUEL_MAX = 2000;
 
     private EmployeeBuilder employeeBuilder;
     private Random rand = new Random();
@@ -63,14 +55,14 @@ abstract public class TransportBuilder {
     }
 
     protected int getSpeed() {
-        return rand.nextInt(SPEED_MAX - SPEED_MIN) + SPEED_MIN;
+        return rand.nextInt(Config.TRANSPORT_SPEED_MAX - Config.TRANSPORT_SPEED_MIN) + Config.TRANSPORT_SPEED_MIN;
     }
 
     protected int getCapacity() {
-        return rand.nextInt(CAPACITY_MAX - CAPACITY_MIN) + CAPACITY_MIN;
+        return rand.nextInt(Config.TRANSPORT_CAPACITY_MAX - Config.TRANSPORT_CAPACITY_MIN) + Config.TRANSPORT_CAPACITY_MIN;
     }
 
     protected int getDistanceWithoutRefuel() {
-        return rand.nextInt(DISTANCE_WITHOUT_REFUEL_MAX - DISTANCE_WITHOUT_REFUEL_MIN) + DISTANCE_WITHOUT_REFUEL_MIN;
+        return rand.nextInt(Config.TRANSPORT_DISTANCE_WITHOUT_REFUEL_MAX - Config.TRANSPORT_DISTANCE_WITHOUT_REFUEL_MIN) + Config.TRANSPORT_DISTANCE_WITHOUT_REFUEL_MIN;
     }
 }

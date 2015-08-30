@@ -57,10 +57,12 @@ public class TransportCompany implements Runnable {
 
     @Override
     public void run() {
-        try {
-            Thread.sleep(10000);
-            buyTransport();
-        } catch (Exception exception) {}
+        for(int i = 0; i < Config.AMOUNT_OF_TRANSPORT_TO_BUY; i++) {
+            try {
+                Thread.sleep(Config.TIME_BEFORE_BUY_NEW_TRANSPORT);
+                buyTransport();
+            } catch (Exception exception) {}
+        }
     }
 
     private ArrayList<TransportBuilder> getTransportBuilders() {
@@ -79,4 +81,5 @@ public class TransportCompany implements Runnable {
         this.transportDepartment = transportDepartment;
         return this;
     }
+
 }

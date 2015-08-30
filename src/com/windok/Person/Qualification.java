@@ -7,81 +7,81 @@ public enum Qualification {
     FIRST {
         @Override
         public int getDriverSalary() {
-            return 0;
+            return 500;
         }
 
         @Override
         public int getPilotSalary() {
-            return 0;
+            return 1500;
         }
 
         @Override
         public int getCaptainSalary() {
-            return 0;
+            return 1350;
         }
     },
     SECOND {
         @Override
         public int getDriverSalary() {
-            return 0;
+            return 540;
         }
 
         @Override
         public int getPilotSalary() {
-            return 0;
+            return 1800;
         }
 
         @Override
         public int getCaptainSalary() {
-            return 0;
+            return 1600;
         }
     },
     THIRD {
         @Override
         public int getDriverSalary() {
-            return 0;
+            return 700;
         }
 
         @Override
         public int getPilotSalary() {
-            return 0;
+            return 2500;
         }
 
         @Override
         public int getCaptainSalary() {
-            return 0;
+            return 2400;
         }
     },
     FORTH {
         @Override
         public int getDriverSalary() {
-            return 0;
+            return 800;
         }
 
         @Override
         public int getPilotSalary() {
-            return 0;
+            return 3200;
         }
 
         @Override
         public int getCaptainSalary() {
-            return 0;
+            return 3200;
         }
     },
     FIFTH {
         @Override
         public int getDriverSalary() {
-            return 0;
+            return 950;
         }
 
         @Override
         public int getPilotSalary() {
-            return 0;
+            return 4000;
         }
 
         @Override
         public int getCaptainSalary() {
-            return 0;
+            return 4200;
         }
     };
 

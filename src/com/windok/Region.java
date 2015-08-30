@@ -10,8 +10,7 @@ public enum Region {
 
     private static Random random = new Random();
 
-    public static Region random()
-    {
+    public static Region random() {
         return Region.values()[random.nextInt(Region.values().length)];
     }
 

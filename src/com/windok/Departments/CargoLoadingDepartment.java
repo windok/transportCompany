@@ -4,7 +4,7 @@ import com.windok.Builders.CargoBuilder;
 import com.windok.Cargo.Cargo;
 import com.windok.Cargo.CargoPackage;
 import com.windok.Cargo.CargoType;
-import com.windok.Exceptions.NotDefinedCargoException;
+import com.windok.Config;
 import com.windok.Transport.Transport;
 
 import java.util.Iterator;
@@ -29,21 +29,18 @@ public class CargoLoadingDepartment implements Runnable {
 
     @Override
     public void run() {
-        while (true) {
+        for(int i = 0; i < Config.AMOUNT_OF_CARGO_TO_GENERATE; i++) {
             try {
-                Thread.sleep(random.nextInt(500));
-            } catch (InterruptedException exception) {
-            }
-            try {
-                this.addToLoadingQueue(getCargoBuilder().build(CargoType.random()));
-            } catch (NotDefinedCargoException exception) {
+                Thread.sleep(random.nextInt(Config.MAX_TIME_OF_NEW_CARGO_FROM_CUSTOMER_WAITING));
+                addToLoadingQueue(getCargoBuilder().build(CargoType.random()));
+            } catch (Exception exception) {
             }
         }
     }
 
 
     synchronized public CargoPackage preparePackage(Transport transport) {
-        CargoPackage cargoPackage = new CargoPackage(random.nextInt(5000));
+        CargoPackage cargoPackage = new CargoPackage(random.nextInt(Config.MAX_DISTANCE_OF_CARGO_DELIVERING));
 
         Iterator<Cargo> iterator = getLoadingQueue().iterator();
 
