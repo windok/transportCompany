@@ -14,11 +14,15 @@ public class TransportCompany implements Runnable {
 
     private ArrayList<TransportBuilder> transportBuilders = new ArrayList<>();
     private Random random = new Random();
+    private Thread thread;
 
     private TransportDepartment transportDepartment;
+    private CargoLoadingDepartment cargoLoadingDepartment;
 
-    public TransportCompany(TransportDepartment transportDepartment) {
+    public TransportCompany(TransportDepartment transportDepartment, CargoLoadingDepartment cargoLoadingDepartment) {
         setTransportDepartment(transportDepartment);
+        setCargoLoadingDepartment(cargoLoadingDepartment);
+        setThread(new Thread(this));
     }
 
     public static void main(String args[]) throws Exception {
@@ -26,7 +30,7 @@ public class TransportCompany implements Runnable {
         CargoLoadingDepartment cargoLoadingDepartment = new CargoLoadingDepartment(new CargoBuilder());
         TransportDepartment transportDepartment = new TransportDepartment(cargoLoadingDepartment);
 
-        TransportCompany transportCompany = new TransportCompany(transportDepartment);
+        TransportCompany transportCompany = new TransportCompany(transportDepartment, cargoLoadingDepartment);
 
         transportCompany.addTransportBuilder(TransportBuilder.instantiate(TransportType.CAR));
         transportCompany.addTransportBuilder(TransportBuilder.instantiate(TransportType.AIRCRAFT));
@@ -36,7 +40,18 @@ public class TransportCompany implements Runnable {
         transportCompany.buyTransport(Region.EMEA);
         transportCompany.buyTransport(Region.APAC);
 
-        new Thread(transportCompany).start();
+        transportCompany.getThread().start();
+
+        cargoLoadingDepartment.getThread().join();
+        transportCompany.getThread().join();
+
+        for (int i = 0; i < Config.DAYS_BEFORE_VIRUS_COVERS_WHOLE_WORLD; i++) {
+            System.out.println("New infection is covering the world...");
+            Thread.sleep(1000);
+        }
+
+        System.out.println("BANG!!! COMPANY WAS DESTROYED AND ALL CUSTOMERS ARE NOT DIED!!! \nTHEY ARE WALKING DEAD!!!\nHA-HA-HA!!");
+        System.out.println("\n\n try to build new world from Config...");
     }
 
     public void addTransportBuilder(TransportBuilder transportBuilder) {
@@ -60,7 +75,13 @@ public class TransportCompany implements Runnable {
         for(int i = 0; i < Config.AMOUNT_OF_TRANSPORT_TO_BUY; i++) {
             try {
                 Thread.sleep(Config.TIME_BEFORE_BUY_NEW_TRANSPORT);
+
+                if (! getCargoLoadingDepartment().getThread().isAlive()){
+                    break;
+                }
+
                 buyTransport();
+
             } catch (Exception exception) {}
         }
     }
@@ -73,6 +94,15 @@ public class TransportCompany implements Runnable {
         return random;
     }
 
+    private Thread getThread() {
+        return thread;
+    }
+
+    private TransportCompany setThread(Thread thread) {
+        this.thread = thread;
+        return this;
+    }
+
     private TransportDepartment getTransportDepartment() {
         return transportDepartment;
     }
@@ -82,4 +112,12 @@ public class TransportCompany implements Runnable {
         return this;
     }
 
+    private CargoLoadingDepartment getCargoLoadingDepartment() {
+        return cargoLoadingDepartment;
+    }
+
+    private TransportCompany setCargoLoadingDepartment(CargoLoadingDepartment cargoLoadingDepartment) {
+        this.cargoLoadingDepartment = cargoLoadingDepartment;
+        return this;
+    }
 }

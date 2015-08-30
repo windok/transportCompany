@@ -1,6 +1,7 @@
 package com.windok.Delivery;
 
 import com.windok.Cargo.CargoPackage;
+import com.windok.Config;
 import com.windok.Departments.CargoLoadingDepartment;
 import com.windok.Transport.Transport;
 
@@ -17,7 +18,6 @@ public class Delivery implements Runnable, DeliveryObservable {
         observers = new ArrayList<>();
         setTransport(transport);
         setCargoLoadingDepartment(cargoLoadingDepartment);
-
     }
 
     public void startDelivery() {
@@ -27,9 +27,15 @@ public class Delivery implements Runnable, DeliveryObservable {
     @Override
     public void run() {
         CargoPackage cargoPackage = getCargoLoadingDepartment().preparePackage(getTransport());
+
         try {
-            getTransport().deliver(cargoPackage);
-        } catch (InterruptedException exception) {}
+            if (cargoPackage.getTotalWeight() == 0) {
+                Thread.sleep(Config.TIME_OF_TRANSPORT_WAITING_IF_NO_CARGO);
+            } else {
+                getTransport().deliver(cargoPackage);
+            }
+        } catch (InterruptedException exception) {
+        }
 
         notifyObservers();
     }

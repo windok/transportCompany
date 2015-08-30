@@ -14,13 +14,16 @@ import java.util.TreeSet;
 
 public class CargoLoadingDepartment implements Runnable {
 
+    private Thread thread;
     private Set<Cargo> loadingQueue = new TreeSet<>();
     private Random random = new Random();
     private CargoBuilder cargoBuilder;
 
     public CargoLoadingDepartment(CargoBuilder cargoBuilder) {
         setCargoBuilder(cargoBuilder);
-        new Thread(this).start();
+
+        setThread(new Thread(this));
+        getThread().start();
     }
 
     public void addToLoadingQueue(Cargo cargo) {
@@ -29,7 +32,7 @@ public class CargoLoadingDepartment implements Runnable {
 
     @Override
     public void run() {
-        for(int i = 0; i < Config.AMOUNT_OF_CARGO_TO_GENERATE; i++) {
+        for (int i = 0; i < Config.AMOUNT_OF_CARGO_TO_GENERATE; i++) {
             try {
                 Thread.sleep(random.nextInt(Config.MAX_TIME_OF_NEW_CARGO_FROM_CUSTOMER_WAITING));
                 addToLoadingQueue(getCargoBuilder().build(CargoType.random()));
@@ -57,6 +60,19 @@ public class CargoLoadingDepartment implements Runnable {
         }
 
         return cargoPackage;
+    }
+
+    public boolean isEmptyCargoQueue() {
+        return getLoadingQueue().isEmpty();
+    }
+
+    public Thread getThread() {
+        return thread;
+    }
+
+    private CargoLoadingDepartment setThread(Thread thread) {
+        this.thread = thread;
+        return this;
     }
 
     private Set<Cargo> getLoadingQueue() {

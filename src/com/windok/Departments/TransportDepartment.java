@@ -23,7 +23,9 @@ public class TransportDepartment implements DeliverySubject {
 
     @Override
     public void update(DeliveryObservable deliveryObservable) {
-        deliveryObservable.startDelivery();
+        if (!getCargoLoadingDepartment().isEmptyCargoQueue()) {
+            deliveryObservable.startDelivery();
+        }
     }
 
     private CargoLoadingDepartment getCargoLoadingDepartment() {
