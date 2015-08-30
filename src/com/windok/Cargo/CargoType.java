@@ -7,19 +7,19 @@ public enum CargoType {
     HUMAN {
         @Override
         public int getWeight() {
-            return random.nextInt(Weight.HUMAN_MAX - Weight.HUMAN_MIN) - Weight.HUMAN_MIN;
+            return random.nextInt(Weight.HUMAN_MAX - Weight.HUMAN_MIN) + Weight.HUMAN_MIN;
         }
     },
     ANIMAL {
         @Override
         public int getWeight() {
-            return random.nextInt(Weight.ANIMAL_MAX - Weight.ANIMAL_MIN) - Weight.ANIMAL_MIN;
+            return random.nextInt(Weight.ANIMAL_MAX - Weight.ANIMAL_MIN) + Weight.ANIMAL_MIN;
         }
     },
     THING {
         @Override
         public int getWeight() {
-            return random.nextInt(Weight.THING_MAX - Weight.THING_MIN) - Weight.THING_MIN;
+            return random.nextInt(Weight.THING_MAX - Weight.THING_MIN) + Weight.THING_MIN;
         }
     };
 

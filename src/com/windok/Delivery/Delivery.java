@@ -1,46 +1,50 @@
-package com.windok;
+package com.windok.Delivery;
 
 import com.windok.Cargo.CargoPackage;
 import com.windok.Departments.CargoLoadingDepartment;
 import com.windok.Transport.Transport;
 
-public class Delivery extends java.util.Observable implements Runnable {
+import java.util.ArrayList;
+import java.util.List;
 
-    private Thread thread;
+public class Delivery implements Runnable, DeliveryObservable {
+
     private Transport transport;
     private CargoLoadingDepartment cargoLoadingDepartment;
+    private List<DeliverySubject> observers;
 
     public Delivery(Transport transport, CargoLoadingDepartment cargoLoadingDepartment) {
-        setThread(new Thread(this));
+        observers = new ArrayList<>();
         setTransport(transport);
         setCargoLoadingDepartment(cargoLoadingDepartment);
 
-        setChanged();
-        notifyObservers();
     }
 
-    public void start() {
-        getThread().start();
+    public void startDelivery() {
+        new Thread(this).start();
     }
 
     @Override
     public void run() {
-        CargoPackage cargoPackage = cargoLoadingDepartment.preparePackage(getTransport());
+        System.out.println("Delivery starts");
+        CargoPackage cargoPackage = getCargoLoadingDepartment().preparePackage(getTransport());
         try {
             getTransport().deliver(cargoPackage);
         } catch (InterruptedException exception) {}
 
-        setChanged();
         notifyObservers();
     }
 
-    private Thread getThread() {
-        return thread;
+    @Override
+    public void addObserver(DeliverySubject deliverySubject) {
+        observers.add(deliverySubject);
     }
 
-    private Delivery setThread(Thread thread) {
-        this.thread = thread;
-        return this;
+    @Override
+    public void notifyObservers() {
+        for (DeliverySubject deliverySubject : observers) {
+            deliverySubject.update(this);
+        }
     }
 
     private Transport getTransport() {

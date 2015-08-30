@@ -1,12 +1,11 @@
 package com.windok.Departments;
 
-import com.windok.Delivery;
+import com.windok.Delivery.Delivery;
+import com.windok.Delivery.DeliveryObservable;
+import com.windok.Delivery.DeliverySubject;
 import com.windok.Transport.Transport;
 
-import java.util.Observable;
-import java.util.Observer;
-
-public class TransportDepartment implements Observer {
+public class TransportDepartment implements DeliverySubject {
 
     private CargoLoadingDepartment cargoLoadingDepartment;
 
@@ -17,13 +16,14 @@ public class TransportDepartment implements Observer {
     public TransportDepartment addTransport(Transport transport) {
         Delivery delivery = new Delivery(transport, getCargoLoadingDepartment());
         delivery.addObserver(this);
+        delivery.startDelivery();
+
         return this;
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-        Delivery delivery = (Delivery) o;
-        delivery.start();
+    public void update(DeliveryObservable deliveryObservable) {
+        deliveryObservable.startDelivery();
     }
 
     private CargoLoadingDepartment getCargoLoadingDepartment() {
