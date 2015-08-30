@@ -27,8 +27,10 @@ public abstract class Transport {
     protected abstract void leave();
 
     public final void deliver(CargoPackage cargoPackage) throws InterruptedException {
-        leave();
         getEmployee().doJob();
+        leave();
+
+        printDeliveryMessage(cargoPackage);
 
         int distanceToGo = cargoPackage.getDistance();
 
@@ -41,6 +43,20 @@ public abstract class Transport {
         goDistance(distanceToGo);
 
         arrive();
+    }
+
+    private void printDeliveryMessage(CargoPackage cargoPackage) {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.
+                append("Capacity - ").append(getCapacity()).
+                append(". Package weight - ").append(cargoPackage.getTotalWeight()).
+                append(". Distance without refuel - ").append(getDistanceWithoutRefuel()).
+                append(". Distance to go - ").append(cargoPackage.getDistance()).
+                append(". Speed - ").append(getSpeed()).
+                append("\n").append(cargoPackage);
+
+        System.out.println(stringBuilder);
     }
 
     private void goDistance(int distance) throws InterruptedException {
@@ -102,4 +118,8 @@ public abstract class Transport {
         return this;
     }
 
+    @Override
+    public String toString() {
+        return getNumber() + ", capacity - " + getCapacity() + ", distance without refuel - " + getDistanceWithoutRefuel() + ", speed - " + getSpeed();
+    }
 }

@@ -4,27 +4,79 @@ import com.windok.Builders.CargoBuilder;
 import com.windok.Builders.TransportBuilder;
 import com.windok.Departments.CargoLoadingDepartment;
 import com.windok.Departments.TransportDepartment;
+import com.windok.Transport.Transport;
 import com.windok.Transport.TransportType;
 
-public class TransportCompany {
+import java.util.ArrayList;
+import java.util.Random;
+
+public class TransportCompany implements Runnable {
+
+    private ArrayList<TransportBuilder> transportBuilders = new ArrayList<>();
+    private Random random = new Random();
+
+    private TransportDepartment transportDepartment;
+
+    public TransportCompany(TransportDepartment transportDepartment) {
+        setTransportDepartment(transportDepartment);
+    }
 
     public static void main(String args[]) throws Exception {
 
         CargoLoadingDepartment cargoLoadingDepartment = new CargoLoadingDepartment(new CargoBuilder());
         TransportDepartment transportDepartment = new TransportDepartment(cargoLoadingDepartment);
 
-        TransportBuilder carBuilder = TransportBuilder.instantiate(TransportType.CAR);
-        TransportBuilder aircraftBuilder = TransportBuilder.instantiate(TransportType.AIRCRAFT);
-        TransportBuilder boatBuilder = TransportBuilder.instantiate(TransportType.BOAT);
+        TransportCompany transportCompany = new TransportCompany(transportDepartment);
 
-        transportDepartment.
-                addTransport(carBuilder.buy(Region.random())).
-                addTransport(carBuilder.buy(Region.random())).
-                addTransport(aircraftBuilder.buy(Region.random())).
-                addTransport(aircraftBuilder.buy(Region.random())).
-                addTransport(boatBuilder.buy(Region.random())).
-                addTransport(boatBuilder.buy(Region.random()))
-        ;
+        transportCompany.addTransportBuilder(TransportBuilder.instantiate(TransportType.CAR));
+        transportCompany.addTransportBuilder(TransportBuilder.instantiate(TransportType.AIRCRAFT));
+        transportCompany.addTransportBuilder(TransportBuilder.instantiate(TransportType.BOAT));
 
+        transportCompany.buyTransport(Region.US);
+        transportCompany.buyTransport(Region.EMEA);
+        transportCompany.buyTransport(Region.APAC);
+
+        new Thread(transportCompany).start();
+    }
+
+    public void addTransportBuilder(TransportBuilder transportBuilder) {
+        getTransportBuilders().add(transportBuilder);
+    }
+
+    public void buyTransport(Region region) {
+        Transport transport = getTransportBuilders().get(getRandom().nextInt(getTransportBuilders().size())).buy(region);
+
+        System.out.println("COMPANY IS RISING!! New transport was bought: " + transport);
+
+        getTransportDepartment().addTransport(transport);
+    }
+
+    public void buyTransport() {
+        buyTransport(Region.random());
+    }
+
+    @Override
+    public void run() {
+        try {
+            Thread.sleep(10000);
+            buyTransport();
+        } catch (Exception exception) {}
+    }
+
+    private ArrayList<TransportBuilder> getTransportBuilders() {
+        return transportBuilders;
+    }
+
+    private Random getRandom() {
+        return random;
+    }
+
+    private TransportDepartment getTransportDepartment() {
+        return transportDepartment;
+    }
+
+    private TransportCompany setTransportDepartment(TransportDepartment transportDepartment) {
+        this.transportDepartment = transportDepartment;
+        return this;
     }
 }

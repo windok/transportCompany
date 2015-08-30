@@ -50,4 +50,8 @@ public class CargoPackage implements Iterable<Cargo> {
         return totalWeight;
     }
 
+    @Override
+    public String toString() {
+        return "CargoPackage :" + cargoCollection;
+    }
 }

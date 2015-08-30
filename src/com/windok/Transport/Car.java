@@ -7,14 +7,19 @@ public class Car extends Transport {
     }
 
     protected void arrive() {
-        System.out.println("Car arrived to end point. Details: " + this);
+        System.out.println("Car " + getNumber() + " arrived to " + getRegion());
     }
 
     protected void refuel() {
-        System.out.println("Car was refueled. Details: " + this);
+        System.out.println("Car " + getNumber() + " was refueled");
     }
 
     protected void leave() {
-        System.out.println("Car leaved the start point. Details: " + this);
+        System.out.println("Car " + getNumber() + " leaved " + getRegion());
+    }
+
+    @Override
+    public String toString() {
+        return "Car " + super.toString();
     }
 }

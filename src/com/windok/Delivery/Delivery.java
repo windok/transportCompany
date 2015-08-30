@@ -26,7 +26,6 @@ public class Delivery implements Runnable, DeliveryObservable {
 
     @Override
     public void run() {
-        System.out.println("Delivery starts");
         CargoPackage cargoPackage = getCargoLoadingDepartment().preparePackage(getTransport());
         try {
             getTransport().deliver(cargoPackage);

@@ -7,15 +7,19 @@ public class Boat extends Transport{
     }
 
     protected void arrive() {
-        System.out.println("Boat arrived to end point. Details: " + this);
+        System.out.println("Boat " + getNumber() + " arrived to " + getRegion());
     }
 
     protected void refuel() {
-        System.out.println("Boat was refueled. Details: " + this);
+        System.out.println("Boat " + getNumber() + " was refueled");
     }
 
     protected void leave() {
-        System.out.println("Boat leaved the start point. Details: " + this);
+        System.out.println("Boat " + getNumber() + " leaved " + getRegion());
     }
 
+    @Override
+    public String toString() {
+        return "Boat " + super.toString();
+    }
 }
